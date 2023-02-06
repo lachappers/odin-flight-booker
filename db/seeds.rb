@@ -42,22 +42,12 @@ ActiveRecord::Base.connection.execute("DELETE from sqlite_sequence where name = 
 
 # add flights
 
-4.times {
+1450.times {
   a = Airport.order("RANDOM()")
   t = Time.now + rand(10000000)
   et = t + rand(50000)
   Flight.create!(departure_airport_id: a.first.id, arrival_airport_id: a.last.id, start_time: t, end_time: et)
 }
 
-# 4.times {
-#   a = Airport.order("RANDOM()")
-#   t = Time.now + rand(10000000)
-#   et = t + rand(50000)
-#   f = Flight.new
-#   f.departure_airport_id = a.first
-#   f.arrival_airport_id = a.last
-#   f.start_time = t
-#   f.end_time = et
-#   f.save
-# }
+
 p "Created #{Flight.count} flights"

@@ -1,0 +1,24 @@
+<h1>Flights#index</h1>
+<p>Find me in app/views/flights/index.html.erb</p>
+
+<%= form_with model: @flight, method: :get do |f| %>
+  <%= f.label :departure_airport %>
+  <br>
+  <%= f.select :departure_airport, @airport_options, :include_blank => "Select Departure Airport" %>
+  <br><br>
+  <%= f.label :arrival_airport %>
+  <br>
+  <%= f.select :arrival_airport, @airport_options, :include_blank => "Select Destination" %>
+  <br><br>
+  <%= f.label "number_of_passengers", "Number of Passengers" %>
+  <br>
+  <%= f.select("number_of_passengers", (1..4)) %>
+  <br><br>
+  <%= f.label :start_time, "Departure Date" %>
+  <br>
+  <%= f.select :start_time, @available_flight_dates, :include_blank => "Select Airports" %>
+
+  <br><br>
+  <%= f.submit %>
+
+<% end %>
