@@ -37,10 +37,17 @@ p "Created #{Airport.count} airports"
 
 # destroy existing to reset
 
-# Flight.destroy_all
-# ActiveRecord::Base.connection.execute("DELETE from sqlite_sequence where name = 'flights'")
+Flight.destroy_all
+ActiveRecord::Base.connection.execute("DELETE from sqlite_sequence where name = 'flights'")
 
-# # add flights
+# add flights
+
+4.times {
+  a = Airport.order("RANDOM()")
+  t = Time.now + rand(10000000)
+  et = t + rand(50000)
+  Flight.create!(departure_airport_id: a.first.id, arrival_airport_id: a.last.id, start_time: t, end_time: et)
+}
 
 # 4.times {
 #   a = Airport.order("RANDOM()")
@@ -53,4 +60,4 @@ p "Created #{Airport.count} airports"
 #   f.end_time = et
 #   f.save
 # }
-# p "Created #{Flight.count} flights"
+p "Created #{Flight.count} flights"
