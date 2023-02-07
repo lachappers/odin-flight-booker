@@ -1,17 +1,42 @@
 class Flight < ApplicationRecord
   belongs_to :departure_airport, class_name: "Airport"
-  # , foreign_key: "departure_airport_id"
   belongs_to :arrival_airport, class_name: "Airport"
-  # , foreign_key: "arrival_airport_id"
+  
 
-  def duration
-    duration = end_time - start_time
-    duration.strftime("%l:%M%P")
-  end
+  scope :airport_options, -> { Airport.pluck(:name, :id) }
+
+  # def flight_dates
+  #   @flight_dates = @flights.map{|f| ("#{f.start_time.day.to_s.rjust(2,"0")}/#{f.start_time.month.to_s.rjust(2,"0")}/#{f.start_time.year}")}.uniq
+  # end
+
+  # def duration
+  #   duration = self.end_time - self.start_time
+  #   @duration = duration.strftime("%l:%M%P")
+  # end
 
 
-  def start_date_formatted
-    start_time.strftime("%d/%m/%Y")
-  end
+  # def start_date_formatted
+  #   # @start_date_formatted = start_time.strftime("%d/%m/%Y")
+  #   p start_date_tof
+  # end
+  # def start_date_tof
+  #   start_time.strftime("%d/%m/%Y")
+  # end
+
+
+  # # def self.start_date_formatted
+  # #   start_date_formatted = start_time.strftime("%d/%m/%Y")
+  # # end
+
+  # def start_time_formatted
+  #   @start_time_formatted = start_time.strftime("%l:%M%P")
+  # end
+  # def airport_options
+  #   Airport.pluck(:name, :id)
+  # end
+
+
+
 
 end
+

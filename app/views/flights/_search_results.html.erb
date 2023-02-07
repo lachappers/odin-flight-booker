@@ -1,0 +1,26 @@
+<h2>Available flights:</h2>
+<% if @flights %>
+  <table>
+    <thead>
+      <tr>
+        <th>Departure Date</th>
+        <th>Departure Time</th>
+        <th>Departure Airport</th>
+        <th>Arrival Airport</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @flights.each do |f|  %>
+        <tr>
+          <td><%= f.start_time.strftime("%d/%m/%Y") %></td>
+          <td><%= f.start_time.strftime("%l:%M%P") %></td>
+          <td><%= f.departure_airport.name %></td>
+          <td><%= f.arrival_airport.name %></td>
+
+        </tr>
+        <% end %>
+
+    </tbody>
+  </table>
+<% else "Search for flights above"%>
+<% end %>
