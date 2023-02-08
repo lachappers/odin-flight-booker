@@ -1,4 +1,5 @@
   <%= form_with model: @flights, url: flights_path, method: :get, local: true do |f| %>
+
     <%= f.label :departure_airport_id %>
     <br>
     <%= f.select :departure_airport_id, @flights.airport_options, prompt: true %>
@@ -17,4 +18,20 @@
 
     <br><br>
     <%= f.submit "Search", name: :search%>
+  <% end %>
+
+
+
+  <% if false %>
+      <% if @flights.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@flights.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul>
+        <% @flights.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
   <% end %>

@@ -1,43 +1,50 @@
 class FlightsController < ApplicationController
   def index
+    # @flight_search = {}
     @flights = Flight.all.order(start_time: :asc)
-    flight_dates
+    @flight_dates = flight_dates
     if params[:search]
-      if flight_params.value?("")
-        flight_params.each{|k,v|
-          if v.nil?
-            flash.now[:alert] = "Please add #{k}" 
-            break
-          end
-        }
-        render :index
-      else
-        @date_picked = Date.parse(params[:flight][:start_date])
-        @flights = Flight.where(departure_airport_id: params[:flight][:departure_airport_id], arrival_airport_id: params[:flight][:arrival_airport_id], start_time: @date_picked.all_day).order(start_time: :asc)
-        # flight_dates
-        if @flights.nil?
-          @flights = Flight.where(departure_airport_id: params[:flight][:departure_airport_id], arrival_airport_id: params[:flight][:arrival_airport_id]).order(start_time: :asc)
-          # flight_dates
-          flash.now[:alert] = "No flights on your selected date"
-
-        end
-        render :index
-      end
-    end
+      flight_search
+    end 
   end
 
   def flight_dates
-    @flight_dates = @flights.map{|f| ("#{f.start_time.day.to_s.rjust(2,"0")}/#{f.start_time.month.to_s.rjust(2,"0")}/#{f.start_time.year}")}.uniq
+    @flights.map{|f| ("#{f.start_time.day.to_s.rjust(2,"0")}/#{f.start_time.month.to_s.rjust(2,"0")}/#{f.start_time.year}")}.uniq
   end
+
+  def flight_search
+    params[:flight].delete_if { |k , v| v.blank?}
+    if params[:flight].empty?
+      flash.now[:alert] = "No flights found!"
+    else
+      @flights = search_results
+    end
+  end
+
+  def search_results
+    if params[:flight][:start_date]
+      @date_picked = Date.parse(params[:flight][:start_date])
+      if flight_params.empty?
+      @flights.where(start_time: @date_picked.all_day).order(start_time: :asc)
+      else
+      @flights.where(flight_params, start_time: @date_picked.all_day).order(start_time: :asc)
+      end
+    else
+      @flights.where(flight_params).order(start_time: :asc)
+    end
+  end
+
 
   private
   def flight_params
-    params.require(:flight).permit(:departure_airport_id, :arrival_airport_id, :start_date, :passenger_count)
+    params.require(:flight).permit(:departure_airport_id, :arrival_airport_id)
+  end
+  def search_params
+    params.require(:flight).permit(:departure_airport_id, :arrival_airport_id, :start_date, :passenger_count, :search)
   end
 
 end
 
-# @date_picked = Date.parse(params[:start_date][5..-1].to_f, params[:start_date][3..4].to_f, params[:start_date][0..1].to_f)
 
   # def index
   #   @airport_options = Airport.pluck(:name, :id)
@@ -93,4 +100,49 @@ end
   # def search 
   #   @flights = Flight.where(flight_params).order(start_time: :asc)
 
+  # end
+
+  # @flights = Flight.all.order(start_time: :asc)
+  # flight_dates
+  # # p @flights
+  # if params[:search]
+  #   # flight_params
+  #   flight_params.each{|k,v|
+  #     if v.empty?
+  #       flash.now[:alert] = "Please add #{k}" 
+  #       render :index, status: :unprocessable_entity
+  #       # break
+  #     end
+  #   }
+  #   @date_picked = Date.parse(params[:flight][:start_date])
+  #   @flights = Flight.where(departure_airport_id: params[:flight][:departure_airport_id], arrival_airport_id: params[:flight][:arrival_airport_id], start_time: @date_picked.all_day).order(start_time: :asc)
+  #   if @flights.nil?
+  #     @flights = Flight.where(departure_airport_id: params[:flight][:departure_airport_id], arrival_airport_id: params[:flight][:arrival_airport_id]).order(start_time: :asc)
+  #     # flight_dates
+  #     flash.now[:alert] = "No flights on your selected date"
+  #   end
+  #   # redirect_to :index
+  # end
+
+  # def index
+  #   @search_params = {}
+  #   @flights = Flight.all.order(start_time: :asc)
+  #   flight_dates
+  #   if params[:search]
+  #     if params.valid?
+  #       @date_picked = Date.parse(params[:flight][:start_date])
+  #       @flights = Flight.where(departure_airport_id: params[:flight][:departure_airport_id], arrival_airport_id: params[:flight][:arrival_airport_id], start_time: @date_picked.all_day).order(start_time: :asc)
+  #       if @flights.nil?
+  #         @flights = Flight.where(departure_airport_id: params[:flight][:departure_airport_id], arrival_airport_id: params[:flight][:arrival_airport_id]).order(start_time: :asc)
+  #         # flight_dates
+  #         flash.now[:alert] = "No flights on your selected date"
+  #       end
+  #     else
+  #       @flights = Flight.all.order(start_time: :asc)
+  #       flash.now[:notice] = @flights.errors.full_messages.to_sentence
+  #       render :new, status: :unprocessable_entity
+  #     end
+  #   else
+  #     render :index
+  #   end
   # end

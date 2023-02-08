@@ -10,7 +10,8 @@
       </tr>
     </thead>
     <tbody>
-      <% @flights.each do |f|  %>
+        
+      <% flights.each do |f|  %>
         <tr>
           <td><%= f.start_time.strftime("%d/%m/%Y") %></td>
           <td><%= f.start_time.strftime("%l:%M%P") %></td>
