@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get 'bookings/new'
+  get 'bookings/create'
+  get 'bookings/show'
   root "flights#index"
   resources :flights, only: [:index]
   get '/flights', to: "flights#index"

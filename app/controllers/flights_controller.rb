@@ -5,6 +5,7 @@ class FlightsController < ApplicationController
     @flight_dates = flight_dates
     if params[:search]
       flight_search
+      @search_params = search_params
     end 
   end
 
