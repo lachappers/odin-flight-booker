@@ -1,2 +1,35 @@
-<h1>Bookings#new</h1>
-<p>Find me in app/views/bookings/new.html.erb</p>
+<h1>Bookings#create</h1>
+<p>Find me in app/views/bookings/create.html.erb</p>
+
+<h1>New Booking</h1>
+<%= p params %> 
+
+<h2>Current selection:</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Passengers</th>
+        <th>Departure Date</th>
+        <th>Departure Time</th>
+        <th>Departure Airport</th>
+        <th>Arrival Airport</th>
+      </tr>
+    </thead>
+    <tbody>
+          <tr>
+            <td></td>
+            <td><%= @flight.start_time.strftime("%d/%m/%Y") %></td>
+            <td><%= @flight.start_time.strftime("%l:%M%P") %></td>
+            <td><%= @flight.departure_airport.name %></td>
+            <td><%= @flight.arrival_airport.name %></td>
+          </tr>
+    </tbody>
+  </table>
+  
+  <%= link_to "New search", flights_path %>
+
+<%# <%= render "form", post: @booking %> %>
+
+
+<%# <%= link_to 'Back', bookings_path %> %>

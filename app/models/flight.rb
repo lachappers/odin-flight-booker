@@ -2,7 +2,14 @@ class Flight < ApplicationRecord
   belongs_to :departure_airport, class_name: "Airport"
   belongs_to :arrival_airport, class_name: "Airport"
   
-  validates :departure_airport_id, :arrival_airport_id, :start_date, :passenger_count, presence: true, on: :search
+  has_many :bookings, dependent: :delete_all
+  has_many :passengers, through: :bookings, :dependent => :delete_all
+  accepts_nested_attributes_for :bookings
+  
+  # validates :departure_airport_id, :arrival_airport_id, :start_date
+  validates :passenger_count, presence: true, on: :flight_search
+
+  validates_associated :bookings
 
   scope :airport_options, -> { Airport.pluck(:name, :id) }
 

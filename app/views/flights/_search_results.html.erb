@@ -1,46 +1,18 @@
-<h2>Available flights:</h2>
-<% if @flights %>
-<h4><%= pluralize(flights.length, 'flight') %> matched your search</h4>
-  <table>
-    <thead>
-      <tr>
-        <th>Select Flight</th>
-        <th>Departure Date</th>
-        <th>Departure Time</th>
-        <th>Departure Airport</th>
-        <th>Arrival Airport</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% if @search_params %>
-        <%= form_with url: flights_path, method: :get do |ff| %>
 
-            <% @flights.each do |f|  %>
-              <tr>
-                <td><%= radio_button_tag(:selected_flight, f.id, { checked: true }) %></td>
-                <td><%= f.start_time.strftime("%d/%m/%Y") %></td>
-                <td><%= f.start_time.strftime("%l:%M%P") %></td>
-                <td><%= f.departure_airport.name %></td>
-                <td><%= f.arrival_airport.name %></td>
+  <%= form_with model: @booking, url: 'booking#new', method: :get, local: true do %>
+    <% label_tag :passenger_count %>
+    <%= hidden_field_tag( :passenger_count, @search_params[:passenger_count]) %>
+    <%= p @flights.pluck(:id)%>
+      <% @flights.each do |f|  %>
+        <tr>
+        <% label_tag(:flight_id) %>
+          <td><%= radio_button_tag(:flight_id, f[:id], checked: true) %></td>
+          <td><%= f.start_time.strftime("%d/%m/%Y") %></td>
+          <td><%= f.start_time.strftime("%l:%M%P") %></td>
+          <td><%= f.departure_airport.name %></td>
+          <td><%= f.arrival_airport.name %></td>
+        </tr>
+      <% end %>
+    <%= submit_tag( "Select Flight") %>
+  <% end %>
 
-              </tr>
-              <% end %>
-          <%= hidden_field_tag :passenger_count, params[:passenger_count] %>
-          <%= ff.submit "Select Flight" %>
-        <% end %>
-      <% else %>
-        <% @flights.each do |f|  %>
-          <tr>
-            <td><%= f.start_time.strftime("%d/%m/%Y") %></td>
-            <td><%= f.start_time.strftime("%l:%M%P") %></td>
-            <td><%= f.departure_airport.name %></td>
-            <td><%= f.arrival_airport.name %></td>
-
-          </tr>
-          <% end %>
-        <% end %>
-
-    </tbody>
-  </table>
-<% else "Search for flights above"%>
-<% end %>

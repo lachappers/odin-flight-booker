@@ -1,11 +1,56 @@
+
+<p>Search Params - no local variable or method</p>
+<p>Booking params - no local variable or method</p>
+<p>Flight params  - no local variable or method</p>
+<p>@Search Params</p><%= p @search_params %> 
+<br>
+
+<p>Params</p><%= p params %>
+<p>@Booking params</p><%= p @booking_params %>
+<br>
+
+<p>@Flight params</p><%= p @flight_params %>
+<br>
+
 <h1>Flight Search</h1>
-<%= p @search_params %> 
+
+
+  <p id='notice' style="color: green"><%= notice %></p>
+  <p id='alert' style="color: green"><%= alert %></p>
 
 <div>
-  <%= render "form" %>
+  <%= render 'search_form', flights: @flights %>
 </div>
 <hr>
-<% %>
-<div>
-  <%= render 'search_results', flights: @flights %> 
-</div>
+  <h2>Available flights:</h2>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Select Flight</th>
+        <th>Departure Date</th>
+        <th>Departure Time</th>
+        <th>Departure Airport</th>
+        <th>Arrival Airport</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if params[:commit] %>
+        <%= link_to root_path do %>
+          <h4>New Search</h4>
+        <% end %> 
+        <% if @search_params[:passenger_count] %>
+          <%= render 'search_results', flights: @flights %>
+        <% else %>
+          <div style="color: red">
+          <h4>Select number of passengers before you can book your flight </h4>
+          </div>
+        <% end %>
+        <h4><%= pluralize(@flights.length, 'flight') %> matched your search</h4>
+        <%= render 'flights', flights: @flights %>
+      <% else %>
+        <%= render 'flights', flights: @flights %>
+      <% end %>
+
+    </tbody>
+  </table>

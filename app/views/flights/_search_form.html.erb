@@ -1,0 +1,23 @@
+
+
+  <%= form_with url: flights_path, method: :get, local: true do |f| %>
+
+    <%= f.label :departure_airport_id %>
+    <br>
+    <%= f.select :departure_airport_id, Flight.airport_options, prompt: true %>
+    <br><br>
+    <%= f.label :arrival_airport_id %>
+    <br>
+    <%= f.select :arrival_airport_id, Flight.airport_options, prompt: true %>
+    <br><br>
+    <%= f.label :passenger_count, "Number of Passengers" %>
+    <br>
+    <%= f.select :passenger_count, (1..4), prompt: true %>
+    <br><br>
+    <%= f.label :start_date, "Departure Date" %>
+    <br>
+    <%= f.select :start_date, @flight_dates, prompt: true %>
+
+    <br><br>
+    <%= f.submit "Search"%>
+  <% end %>

@@ -1,11 +1,17 @@
 class FlightsController < ApplicationController
+
   def index
-    # @flight_search = {}
     @flights = Flight.all.order(start_time: :asc)
     @flight_dates = flight_dates
-    if params[:search]
+    @search_params = search_params
+    # unless search_params.empty?
+    if params[:commit]
       flight_search
-      @search_params = search_params
+      # search_params
+
+    # else
+      # flash.now[:alert] = "No search criteria set!"
+      # render :index, status: :unprocessable_entity
     end 
   end
 
@@ -14,34 +20,43 @@ class FlightsController < ApplicationController
   end
 
   def flight_search
-    params[:flight].delete_if { |k , v| v.blank?}
-    if params[:flight].empty?
-      flash.now[:alert] = "No flights found!"
+    @search_params.delete_if{ |k , v| v.blank?}
+    if @search_params.empty?
+      flash.now[:alert] = "No search criteria set!"
+            # flash.now[:notice] = params[:flight].errors.full_messages.to_sentence
+      render :index, status: :unprocessable_entity
     else
-      @flights = search_results
+      @flight_params = flight_params.delete_if{|k,v| v.blank?}
+      search_results
+      @booking_params = booking_params
     end
   end
 
   def search_results
-    if params[:flight][:start_date]
-      @date_picked = Date.parse(params[:flight][:start_date])
-      if flight_params.empty?
-      @flights.where(start_time: @date_picked.all_day).order(start_time: :asc)
+    if @search_params[:start_date]
+      @date_picked = Date.parse(@search_params[:start_date])
+      if @flight_params.empty?
+        @flights = @flights.where(start_time: @date_picked.all_day).order(start_time: :asc)
       else
-      @flights.where(flight_params, start_time: @date_picked.all_day).order(start_time: :asc)
+       @flights = @flights.where(@flight_params, start_time: @date_picked.all_day).order(start_time: :asc)
       end
     else
-      @flights.where(flight_params).order(start_time: :asc)
+      @flights = @flights.where(@flight_params).order(start_time: :asc)
     end
   end
 
 
   private
   def flight_params
-    params.require(:flight).permit(:departure_airport_id, :arrival_airport_id)
+    # params.require(:flight).permit(:departure_airport_id, :arrival_airport_id)
+    params.permit(:departure_airport_id, :arrival_airport_id)
   end
   def search_params
-    params.require(:flight).permit(:departure_airport_id, :arrival_airport_id, :start_date, :passenger_count, :search)
+    params.permit(:departure_airport_id, :arrival_airport_id, :start_date, :passenger_count, :search)
+  end
+  def booking_params
+    # remove this when debugging done
+    params.permit(:passenger_count, :flight_id)
   end
 
 end
@@ -145,5 +160,21 @@ end
   #     end
   #   else
   #     render :index
+  #   end
+  # end
+
+    # def new
+  #   @flight = Flight.new
+  #   # airports in app controller
+  #   @flight_dates = flight_dates
+  # end
+
+  # def create
+  #   @flight = Flight.new(flight_params)
+  #   if @flight.save
+  #     # redirect_to @flight
+  #     render :index
+  #   else
+  #     render :new, status: :unprocessable_entity
   #   end
   # end
