@@ -3,14 +3,16 @@ class BookingsController < ApplicationController
     @booking = Booking.new
     @flight = Flight.find(params[:flight_id])
     # params[:passenger_count].to_i.times { @booking.passengers.build }
+    params[:passenger_count].to_i.times { @booking.passengers.build }
   end
 
   def create
+    @booking = Booking.new(flight_id: params[:flight_id])
     # @passengers = @booking.passengers.create(passenger_params)
     # @booking = Booking.new(search_params)
     # @flight = Flight.find(params[:flight_id])
     # @booking = @flight.bookings.create(booking_params)
-    p params
+
     if @booking.save
       flash[:success] = "Booking Successfully Created"
       # redirect_to booking_url(@booking)
