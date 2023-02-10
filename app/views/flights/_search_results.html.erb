@@ -1,18 +1,17 @@
 
-  <%= form_with model: @booking, url: 'booking#new', method: :get, local: true do %>
-    <% label_tag :passenger_count %>
-    <%= hidden_field_tag( :passenger_count, @search_params[:passenger_count]) %>
-    <%= p @flights.pluck(:id)%>
+<h4><%= pluralize(@flights.length, 'flight') %> matched your search</h4>
+  <%= form_with url: 'bookings/new/', method: :get, local: true do |ff| %>
+    <% ff.label :passenger_count %>
+    <%= ff.hidden_field :passenger_count %>
       <% @flights.each do |f|  %>
         <tr>
-        <% label_tag(:flight_id) %>
-          <td><%= radio_button_tag(:flight_id, f[:id], checked: true) %></td>
+        <% ff.label :flight_id %>
+          <td><%= ff.radio_button :flight_id, f.id %></td>
           <td><%= f.start_time.strftime("%d/%m/%Y") %></td>
           <td><%= f.start_time.strftime("%l:%M%P") %></td>
           <td><%= f.departure_airport.name %></td>
           <td><%= f.arrival_airport.name %></td>
         </tr>
       <% end %>
-    <%= submit_tag( "Select Flight") %>
+    <%= ff.submit %>
   <% end %>
-

@@ -1,0 +1,29 @@
+<%= form_with model: [@booking, @booking.passengers.build] do |form| %>
+<p>
+  <%= form.label :name %>
+  <%= form.text_field :name %>
+</p>
+<p>
+  <%= form.label :email %>
+  <%= form.text_field :email %>
+</p>
+<p>
+  <%= form.submit  %>
+</p>
+<% end %>
+
+<%= form_with model: @booking do |f| %>
+
+  <% :passenger_count times do %>
+    <%= f.fields_for @booking.passengers.build do |ff| %>
+      <p>
+        <%= ff.label :name %>
+        <%= ff.text_field :name %>
+      </p>
+      <p>
+        <%= ff.label :email %>
+        <%= ff.text_field :email %>
+      </p>
+    <% end %>
+    <%= f.submit %>
+  <% end %>

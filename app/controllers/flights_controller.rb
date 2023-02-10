@@ -4,14 +4,8 @@ class FlightsController < ApplicationController
     @flights = Flight.all.order(start_time: :asc)
     @flight_dates = flight_dates
     @search_params = search_params
-    # unless search_params.empty?
     if params[:commit]
       flight_search
-      # search_params
-
-    # else
-      # flash.now[:alert] = "No search criteria set!"
-      # render :index, status: :unprocessable_entity
     end 
   end
 
@@ -52,7 +46,7 @@ class FlightsController < ApplicationController
     params.permit(:departure_airport_id, :arrival_airport_id)
   end
   def search_params
-    params.permit(:departure_airport_id, :arrival_airport_id, :start_date, :passenger_count, :search)
+    params.permit(:departure_airport_id, :arrival_airport_id, :start_date, :passenger_count, :commit)
   end
   def booking_params
     # remove this when debugging done
