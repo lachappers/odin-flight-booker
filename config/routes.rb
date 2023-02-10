@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   # , only: [:index]
   resources :bookings do
       resources :passengers
+      resources :flights
   end
 
 
