@@ -12,18 +12,18 @@
 </p>
 <% end %>
 
-<%= form_with model: @booking do |f| %>
+<%# <%= form_with model: @booking do |f| %> %>
 
-  <% :passenger_count times do %>
-    <%= f.fields_for @booking.passengers.build do |ff| %>
-      <p>
-        <%= ff.label :name %>
-        <%= ff.text_field :name %>
-      </p>
-      <p>
-        <%= ff.label :email %>
-        <%= ff.text_field :email %>
-      </p>
-    <% end %>
-    <%= f.submit %>
-  <% end %>
+  <%# <% :passenger_count times do %> %>
+    <%# <%= f.fields_for @booking.passengers.build do |ff| %> %>
+      <%# <p> %>
+        <%# <%= ff.label :name %> %>
+        <%# <%= ff.text_field :name %> %>
+      <%# </p> %>
+      <%# <p> %>
+        <%# <%= ff.label :email %> %>
+        <%# <%= ff.text_field :email %> %>
+      <%# </p> %>
+    <%# <% end %> %>
+    <%# <%= f.submit %> %>
+  <%# <% end %> %>

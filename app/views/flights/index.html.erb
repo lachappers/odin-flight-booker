@@ -37,16 +37,19 @@
         <% end %> 
         <h4><%= pluralize(@flights.length, 'flight') %> matched your search</h4>
         <% if @search_params[:passenger_count] %>
-          <%= render 'search_results', flights: @flights %>
+          <%= render partial: 'search_results', locals: { flights: @flights } %>
         <% else %>
           <div style="color: red">
           <h4>Select number of passengers before you can book your flight </h4>
           </div>
-
-          <%= render 'flights', flights: @flights %>
+          <% @flights.each do |flight|  %>
+          <tr><%= render flight %></tr>
+          <% end %>
         <% end %>
       <% else %>
-        <%= render 'flights', flights: @flights %>
+          <% @flights.each do |flight|  %>
+            <tr><%= render flight %></tr>
+          <% end %>
       <% end %>
 
     </tbody>

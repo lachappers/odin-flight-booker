@@ -16,7 +16,8 @@
       </ul>
     </div>
   <% end %>
-
+  <h2>Flight Info</h2>
+    <tr><%= render partial: "flights/flight", locals: {flight: @flight}%></tr>
   <h2>Passenger Info</h2>
 
     <%# <%= render "form", post: @booking  %> %>

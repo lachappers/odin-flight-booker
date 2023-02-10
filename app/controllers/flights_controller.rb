@@ -49,7 +49,7 @@ class FlightsController < ApplicationController
     params.permit(:departure_airport_id, :arrival_airport_id, :start_date, :passenger_count, :commit)
   end
   def booking_params
-    # remove this when debugging done
+    # remove this when debugging done?
     params.permit(:passenger_count, :flight_id)
   end
 
