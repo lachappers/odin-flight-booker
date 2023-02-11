@@ -1,10 +1,11 @@
 class Booking < ApplicationRecord
-  belongs_to :passenger
+  # belongs_to : :passenger
+  has_many :passengers
   belongs_to :flight
 
   validates :flight_id, :passenger_id, presence: true
 
-  # accepts_nested_attributes_for :passengers, allow_destroy: true
+  accepts_nested_attributes_for :passengers, allow_destroy: true
 
   after_initialize :set_booking_ref
   # before_create :set_booking_ref

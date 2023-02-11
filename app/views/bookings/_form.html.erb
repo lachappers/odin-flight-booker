@@ -1,29 +1,24 @@
-<%= form_with model: [@booking, @booking.passengers.build] do |form| %>
-<p>
-  <%= form.label :name %>
-  <%= form.text_field :name %>
-</p>
-<p>
-  <%= form.label :email %>
-  <%= form.text_field :email %>
-</p>
-<p>
-  <%= form.submit  %>
-</p>
-<% end %>
+<%# <%= form_with model: [@booking, @booking.passengers.build] do |form| %> %>
 
-<%# <%= form_with model: @booking do |f| %> %>
+<%= form_for @booking do |f| %>
+  <% f.label :flight_id %>
+  <%= f.hidden_field :flight_id, value: params[:flight_id] %>
 
-  <%# <% :passenger_count times do %> %>
-    <%# <%= f.fields_for @booking.passengers.build do |ff| %> %>
-      <%# <p> %>
-        <%# <%= ff.label :name %> %>
-        <%# <%= ff.text_field :name %> %>
-      <%# </p> %>
-      <%# <p> %>
-        <%# <%= ff.label :email %> %>
-        <%# <%= ff.text_field :email %> %>
-      <%# </p> %>
-    <%# <% end %> %>
-    <%# <%= f.submit %> %>
+  <%# <% params[:passenger_count].to_i.times do %>
+
+    <%= f.fields_for :passengers do |ff| %>
+      <h4>Passenger</h4>
+      <p>
+        <%= ff.label :name %>
+        <%= ff.text_field :name %>
+      </p>
+      <p>
+        <%= ff.label :email %>
+        <%= ff.text_field :email %>
+      </p>
+    <% end %>
+
   <%# <% end %> %>
+
+  <p><%= f.submit %></p>
+<% end %>
