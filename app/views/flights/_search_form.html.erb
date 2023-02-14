@@ -1,14 +1,13 @@
 
-
   <%= form_with url: "flights#index", method: :get, local: true do |f| %>
 
     <%= f.label :departure_airport_id %>
     <br>
-    <%= f.select :departure_airport_id, Flight.airport_options, prompt: true %>
+    <%= f.select :departure_airport_id, @airport_options, prompt: true %>
     <br><br>
     <%= f.label :arrival_airport_id %>
     <br>
-    <%= f.select :arrival_airport_id, Flight.airport_options, prompt: true %>
+    <%= f.select :arrival_airport_id, @airport_options, prompt: true %>
     <br><br>
     <%= f.label :passenger_count, "Number of Passengers" %>
     <br>

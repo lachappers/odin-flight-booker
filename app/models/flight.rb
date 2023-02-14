@@ -2,8 +2,10 @@ class Flight < ApplicationRecord
   belongs_to :departure_airport, class_name: "Airport"
   belongs_to :arrival_airport, class_name: "Airport"
   
-  has_many :bookings, dependent: :delete_all
-  has_many :passengers, through: :bookings, :dependent => :delete_all
+  has_many :bookings, dependent: :delete_all, inverse_of: :flight
+  has_many :passengers, through: :bookings, :dependent => :destroy
+  
+  #  ? below why?
   accepts_nested_attributes_for :bookings
   
   # validates :departure_airport_id, :arrival_airport_id, :start_date
@@ -13,7 +15,10 @@ class Flight < ApplicationRecord
 
   scope :airport_options, -> { Airport.pluck(:name, :id) }
 
-  # scope :date, -> {self.start_time.strftime("%d/%m/%Y")}
+  scope :display_date, -> {self.start_time.strftime("%d/%m/%Y")}
+
+
+  scope :display_time, -> {self.start_time.strftime("%l:%M%P")}
 
   # def self.date
   #   @date = self.start_time.strftime("%d/%m/%Y")
@@ -49,8 +54,20 @@ class Flight < ApplicationRecord
   #   Airport.pluck(:name, :id)
   # end
 
-
-
-
+  # def search(search)
+  #   if search
+  #     @flights = Flight.all.order(start_time: :asc)
+  #     if [:start_date]
+  #       @date_picked = Date.parse([:start_date])
+  #       if @flight_params.empty?
+  #         @flights = @flights.where(start_time: @date_picked.all_day).order(start_time: :asc)
+  #       else
+  #       @flights = @flights.where(@flight_params, start_time: @date_picked.all_day).order(start_time: :asc)
+  #       end
+  #     else
+  #       @flights = @flights.where(params[:flight]).order(start_time: :asc)
+  #     end
+  #   end
+  # end
 end
 

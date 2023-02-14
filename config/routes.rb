@@ -6,8 +6,12 @@ Rails.application.routes.draw do
   # get 'bookings/new', to: "bookings#new"
   # get 'bookings/create', to: "bookings#new"
   # get '/bookings', to: "bookings#id"
+  resources :flights do
+    resources :bookings do 
+      resources :passengers
+    end
+  end
   resources :bookings
-
   resources :flights
   # , only: [:index]
   # resources :bookings do

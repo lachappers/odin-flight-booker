@@ -1,11 +1,13 @@
-  <%= form_with url: 'bookings/new/', method: :get, local: true do |ff| %>
+<%= p params %>
+
+  <%= form_with  url: 'bookings/new/', method: :get, local: true do |ff| %>
     <% ff.label :passenger_count %>
     <%= ff.hidden_field :passenger_count, value: params[:passenger_count] %>
       <% @flights.each do |flight|  %>
         <tr>
           <% ff.label :flight_id %>
           <td><%= ff.radio_button :flight_id, flight.id %></td>
-          <%= render partial: "flight", locals: { flight: flight } %>
+          <%= render flight %>
         </tr>
       <% end %>
     <%= ff.submit "Book" %>

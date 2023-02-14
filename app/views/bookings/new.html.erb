@@ -1,5 +1,8 @@
 <h1>Bookings#create</h1>
 <p>Find me in app/views/bookings/create.html.erb</p>
+  <p id='notice' style="color: green"><%= notice %></p>
+  <p id='alert' style="color: green"><%= alert %></p>
+
 <p>Params:</p><%= p params %> 
 <p>@booking_params</p><%= p @booking_params %>
 <p>Pax</p><%= p params[:passenger_count].to_i %>

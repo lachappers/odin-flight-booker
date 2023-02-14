@@ -2,9 +2,10 @@ class FlightsController < ApplicationController
 
   def index
     @flights = Flight.all.order(start_time: :asc)
+    @airport_options = Flight.airport_options
     @flight_dates = flight_dates
     @search_params = search_params
-    if params[:commit]
+    if params[:commit] == "Search"
       flight_search
     end 
   end
@@ -46,7 +47,7 @@ class FlightsController < ApplicationController
     params.permit(:departure_airport_id, :arrival_airport_id)
   end
   def search_params
-    params.permit(:departure_airport_id, :arrival_airport_id, :start_date, :passenger_count, :commit)
+    params.permit(:departure_airport_id, :arrival_airport_id, :start_date, :passenger_count, :flight_id, :commit)
   end
   def booking_params
     # remove this when debugging done?

@@ -1,7 +1,9 @@
 class Booking < ApplicationRecord
   # belongs_to : :passenger
+
+  belongs_to :flight, inverse_of: :bookings
   has_many :passengers
-  belongs_to :flight
+  # pax id is fk for above
 
   validates :flight_id, :passenger_id, presence: true
 
