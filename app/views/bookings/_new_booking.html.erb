@@ -1,8 +1,8 @@
-<%= p params %>
+<%# <%= p params %>
 
-  <%= form_with  url: 'bookings/new/', method: :get, local: true do |ff| %>
+  <%= form_with url: 'bookings/new/', method: :get, local: true do |ff| %>
     <% ff.label :passenger_count %>
-    <%= ff.hidden_field :passenger_count, value: params[:passenger_count] %>
+    <%= ff.hidden_field :passenger_count, value: params[:flight][:passenger_count] %>
       <% @flights.each do |flight|  %>
         <tr>
           <% ff.label :flight_id %>

@@ -1,4 +1,17 @@
 <h1>Bookings#show</h1>
-<p>Find me in app/views/bookings/show.html.erb</p>
+  <p id='notice' style="color: green"><%= notice %></p>
+  <p id='alert' style="color: green"><%= alert %></p>
 
 <%= p @booking %>
+
+<h2>Flight Information:</h2>
+  <%# <%= render 'flights/flight', flight: @booking.flight %> %>
+
+<hr>
+<h3>Passenger Information:</h3>
+<% @booking.passengers.each do |passenger|%>
+  <% i = 1%>
+  <h4><%= "Passenger #{i}" %></h4>
+  <%= render 'layouts/passenger', passenger: passenger %>
+  <% i +=1 %>
+  <% end%>

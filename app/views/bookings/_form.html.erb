@@ -1,13 +1,12 @@
 <%# <%= form_with model: [@booking, @booking.passengers.build] do |form| %> %>
 
-<%= form_for :booking, method: :post, local: true do |f| %>
+<%= form_for @booking, local: true do |f| %>
   <% f.label :flight_id %>
   <%= f.hidden_field :flight_id, value: params[:flight_id] %>
 
-  <% params[:passenger_count].to_i.times do |i|    %>
-
+    <% i = 1 %>
     <%= f.fields_for :passengers do |ff| %>
-      <h4>Passenger <%="#{i+1}"%></h4>
+      <h4>Passenger <%="#{i}"%></h4>
       <p>
         <%= ff.label :name %>
         <%= ff.text_field :name %>
@@ -16,9 +15,8 @@
         <%= ff.label :email %>
         <%= ff.text_field :email %>
       </p>
+      <% i += 1%>
     <% end %>
-
-  <% end %>
-
+    
   <p><%= f.submit %></p>
 <% end %>

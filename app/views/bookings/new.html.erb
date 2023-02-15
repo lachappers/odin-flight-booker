@@ -1,57 +1,40 @@
 <h1>Bookings#create</h1>
-<p>Find me in app/views/bookings/create.html.erb</p>
+
   <p id='notice' style="color: green"><%= notice %></p>
   <p id='alert' style="color: green"><%= alert %></p>
 
-<p>Params:</p><%= p params %> 
-<p>@booking_params</p><%= p @booking_params %>
-<p>Pax</p><%= p params[:passenger_count].to_i %>
+
 <hr>
 <h1>New Booking</h1>
-  <% if @booking.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@booking.errors.count, "error") %> prohibited this post from being saved:</h2>
 
-      <ul>
-      <% @booking.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
   <h2>Flight Info</h2>
-    <tr><%= render partial: "flights/flight", locals: {flight: @flight}%></tr>
+    <tr><%= render "flights/flight", flight: @booking.flight %></tr>
+    <table>
+
+    </table>
     <hr>
   <h2>Passenger Info</h2>
 
-    <%= render partial: "form" %>
-
-<%# <h2>Current selection:</h2>
-
-  <table>
-    <thead>
-      <tr>
-        <th>Passengers</th>
-        <th>Departure Date</th>
-        <th>Departure Time</th>
-        <th>Departure Airport</th>
-        <th>Arrival Airport</th>
-      </tr>
-    </thead>
-    <tbody>
-          <tr>
-            <td></td>
-            <td><%= @flight.start_time.strftime("%d/%m/%Y") %></td>
-            <%# <td><%= @flight.start_time.strftime("%l:%M%P") %></td>
-            <%# <td><%= @flight.departure_airport.name %></td> %>
-            <%# <td><%= @flight.arrival_airport.name %></td> %>
-          <%# </tr> %>
-    <%# </tbody> %>
-  <%# </table> %> %>
-  <br>
-  <%= link_to "New search", flights_path %>
-  <br>
-<%# <%= render "form", post: @booking %> %>
+    <%= render "form" %>
 
 
-<%= link_to 'Back', bookings_path %> %>
+<%= link_to 'Back', bookings_path %>
+
+<hr>
+
+<%# <p>Params:</p><%= p params %>  %>
+<%# <p>@booking_params</p><%= p @booking_params %> %>
+<%# <p>Pax</p><%= p params[:passenger_count].to_i %> %>
+<%# <p>Flight</p><%= p @flight %> %>
+
+  <%# <% if @booking.errors.any? %> %>
+    <%# <div id="error_explanation"> %>
+      <%# <h2><%= pluralize(@booking.errors.count, "error") %> prohibited this post from being saved:</h2> %>
+
+      <ul>
+      <%# <% @booking.errors.full_messages.each do |msg| %> %>
+        <%# <li><%= msg %></li> %>
+      <%# <% end %> %>
+      <%# </ul> %>
+    <%# </div> %>
+  <%# <% end %> %>

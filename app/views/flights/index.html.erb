@@ -2,10 +2,11 @@
 <%# <p>Search Params - no local variable or method</p> %>
 <%# <p>Booking params - no local variable or method</p> %>
 <%# <p>Flight params  - no local variable or method</p> %>
-<p>@Search Params</p><%= p @search_params %> 
+<%# <p>@Search Params</p><%= p @search_params %>  %>
 <p>Params</p><%= p params %>
-<p>@Booking params</p><%= p @booking_params %>
-<p>@Flight params</p><%= p @flight_params %>
+<%# <p>@Booking params</p><%= p @booking_params %> %>
+<%# <p>@Flight params</p><%= p @flight_params %> %>
+
 <br>
 
 <h1>Flight Search</h1>
@@ -15,7 +16,8 @@
   <p id='alert' style="color: green"><%= alert %></p>
 
 <div>
-  <%= render 'search_form', flights: @flights %>
+  <%# <% @flight = Flight.new  %> %>
+  <%= render 'search_form', flight: @flight %>
 </div>
 <hr>
   <h2>Available flights:</h2>
@@ -31,34 +33,31 @@
       </tr>
     </thead>
     <tbody>
-      <% if params[:commit] %>
+      <% if params[:flight] %>
         <%= link_to root_path do %>
           <h4>New Search</h4>
         <% end %> 
-        <h4><%= pluralize(@flights.length, 'flight') %> matched your search</h4>
+        <h4><%= pluralize(@flights.length, 'flight')%> matched your search</h4>
       
-        <% if @search_params[:passenger_count] %>
+        <% if params[:flight][:passenger_count] %>
           <%= render '/bookings/new_booking' %>
-        
         <% else %>
           <div style="color: red">
           <h4>Select number of passengers before you can book your flight </h4>
           </div>
-
           <% @flights.each do |flight|  %>
-            <tr>
-              <td>&nbsp;</td>
-              <td><%= render flight %></td>
-            </tr>
+              <tr>
+                <td><%= render flight %></td>
+              </tr>
           <% end %>
         <% end %>
       
       <% else %>
-          <% @flights.each do |flight|  %>
-            <tr>
-              <td><%= render flight %></td>
-            </tr>
-          <% end %>
+            <% @flights.each do |flight|  %>
+              <tr>
+                <td><%= render flight %></td>
+              </tr>
+            <% end %>
       <% end %>
 
     </tbody>

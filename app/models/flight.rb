@@ -1,3 +1,25 @@
+# == Schema Information
+#
+# Table name: flights
+#
+#  id                   :integer          not null, primary key
+#  end_time             :datetime
+#  start_time           :datetime
+#  created_at           :datetime         not null
+#  updated_at           :datetime         not null
+#  arrival_airport_id   :integer          not null
+#  departure_airport_id :integer          not null
+#
+# Indexes
+#
+#  index_flights_on_arrival_airport_id    (arrival_airport_id)
+#  index_flights_on_departure_airport_id  (departure_airport_id)
+#
+# Foreign Keys
+#
+#  arrival_airport_id    (arrival_airport_id => airports.id)
+#  departure_airport_id  (departure_airport_id => airports.id)
+#
 class Flight < ApplicationRecord
   belongs_to :departure_airport, class_name: "Airport"
   belongs_to :arrival_airport, class_name: "Airport"
@@ -15,59 +37,8 @@ class Flight < ApplicationRecord
 
   scope :airport_options, -> { Airport.pluck(:name, :id) }
 
-  scope :display_date, -> {self.start_time.strftime("%d/%m/%Y")}
+  
 
 
-  scope :display_time, -> {self.start_time.strftime("%l:%M%P")}
-
-  # def self.date
-  #   @date = self.start_time.strftime("%d/%m/%Y")
-  # end
-
-  # def flight_dates
-  #   @flight_dates = @flights.map{|f| ("#{f.start_time.day.to_s.rjust(2,"0")}/#{f.start_time.month.to_s.rjust(2,"0")}/#{f.start_time.year}")}.uniq
-  # end
-
-  # def duration
-  #   duration = self.end_time - self.start_time
-  #   @duration = duration.strftime("%l:%M%P")
-  # end
-
-
-  # def start_date_formatted
-  #   # @start_date_formatted = start_time.strftime("%d/%m/%Y")
-  #   p start_date_tof
-  # end
-  # def start_date_tof
-  #   start_time.strftime("%d/%m/%Y")
-  # end
-
-
-  # # def self.start_date_formatted
-  # #   start_date_formatted = start_time.strftime("%d/%m/%Y")
-  # # end
-
-  # def start_time_formatted
-  #   @start_time_formatted = start_time.strftime("%l:%M%P")
-  # end
-  # def airport_options
-  #   Airport.pluck(:name, :id)
-  # end
-
-  # def search(search)
-  #   if search
-  #     @flights = Flight.all.order(start_time: :asc)
-  #     if [:start_date]
-  #       @date_picked = Date.parse([:start_date])
-  #       if @flight_params.empty?
-  #         @flights = @flights.where(start_time: @date_picked.all_day).order(start_time: :asc)
-  #       else
-  #       @flights = @flights.where(@flight_params, start_time: @date_picked.all_day).order(start_time: :asc)
-  #       end
-  #     else
-  #       @flights = @flights.where(params[:flight]).order(start_time: :asc)
-  #     end
-  #   end
-  # end
 end
 
