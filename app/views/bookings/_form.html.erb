@@ -1,22 +1,22 @@
-<%# <%= form_with model: [@booking, @booking.passengers.build] do |form| %> %>
+  <%= form_with model: @booking, local: true, data: { controller: 'nested-form', nested_form_wrapper_selector_value: '.nested-form-wrapper'} do |f| %>
+    <% f.label :flight_id %>
+    <%= f.hidden_field :flight_id, value: params[:flight_id] %>
 
-<%= form_for @booking, local: true do |f| %>
-  <% f.label :flight_id %>
-  <%= f.hidden_field :flight_id, value: params[:flight_id] %>
+    <template data-nested-form-target="template">
+      <%= f.fields_for :passengers, Passenger.new, child_index: 'NEW_RECORD' do |ff| %>
+        <%= render "passenger_form", ff: ff %>
+        <%# <% i += 1%>
+      <% end %>
+    </template>
 
-    <% i = 1 %>
-    <%= f.fields_for :passengers do |ff| %>
-      <h4>Passenger <%="#{i}"%></h4>
-      <p>
-        <%= ff.label :name %>
-        <%= ff.text_field :name %>
-      </p>
-      <p>
-        <%= ff.label :email %>
-        <%= ff.text_field :email %>
-      </p>
-      <% i += 1%>
-    <% end %>
-    
-  <p><%= f.submit %></p>
-<% end %>
+      <%# <% i = 1 %>
+      <%= f.fields_for :passengers do |ff| %>
+        <%= render "passenger_form", ff: ff %>
+        <%# <% i += 1%> 
+      <% end %>
+
+      <div data-nested-form-target="target"></div>
+      <div class="btn"><button type="button" data-action="nested-form#add">Add Passenger</button></div>
+
+      <div class = "btn"><%= f.submit %></div>
+  <% end %>

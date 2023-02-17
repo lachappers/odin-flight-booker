@@ -1,31 +1,45 @@
-<h1>Bookings#create</h1>
+<div class="d-flex flex-column w-100 align-items-center">
+  <div class="title">
+    <h1>New Booking</h1>
+  </div>
+  
+  <div class="page-notices">
+    <p id='notice' style="color: green"><%= notice %></p>
+    <p id='alert' style="color: green"><%= alert %></p>
+  </div>  
+  <hr>
+<div class="booking-container"> 
 
-  <p id='notice' style="color: green"><%= notice %></p>
-  <p id='alert' style="color: green"><%= alert %></p>
-
-
-<hr>
-<h1>New Booking</h1>
-
-  <h2>Flight Info</h2>
-    <tr><%= render "flights/flight", flight: @booking.flight %></tr>
-    <table>
-
+  <div class="flight-container border p-3 rounded">
+    <table class='table table-striped'>
+      <h2>Flight Info</h2>
+      <thead>
+        <th scope="col">Date</th>
+        <th scope="col">Departure Time</th>
+        <th scope="col">Departing From</th>
+        <th scope="col">Destination</th>
+      </thead>
+      <tbody>
+        <tr scope='row'><%= render "flights/flight", flight: @booking.flight %></tr>
+      </tbody>
     </table>
-    <hr>
-  <h2>Passenger Info</h2>
+  </div>
+  
+  <hr>
 
-    <%= render "form" %>
-
-
-<%= link_to 'Back', bookings_path %>
+  <div class="new-passengers-container d-flex flex-column p-3 border-bottom">
+    <h2>Passenger Info</h2>
+    <div class="w-100"><%= render "form" %></div>
+  </div>
+</div>
+  
+  
+<div class="nav-buttons"><%= link_to 'Back', bookings_path %></div>
+</div>
 
 <hr>
 
-<%# <p>Params:</p><%= p params %>  %>
-<%# <p>@booking_params</p><%= p @booking_params %> %>
-<%# <p>Pax</p><%= p params[:passenger_count].to_i %> %>
-<%# <p>Flight</p><%= p @flight %> %>
+
 
   <%# <% if @booking.errors.any? %> %>
     <%# <div id="error_explanation"> %>

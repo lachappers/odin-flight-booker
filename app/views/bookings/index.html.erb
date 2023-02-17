@@ -1,0 +1,31 @@
+<div class="d-flex flex-column w100 align-items-center index-container">
+  <div class="title"><h1>All Bookings</h1></div>
+
+  <div class="page-notices">
+    <p id='notice' style="color: green"><%= notice %></p>
+    <p id='alert' style="color: green"><%= alert %></p>
+  </div>
+  <hr>
+  <div class="index-container">
+    <div class="index-list">
+      <table class="table table-striped">
+        <h2>Bookings</h2>
+        <thead>
+          <th scope="col">Booking Reference</th>
+          <th scope="col">Departure Date</th>
+          <th scope="col">Flight Number</th>
+          <th scope="col">Number of passengers</th>
+        </thead>
+        <tbody>
+          <% @bookings.each do |booking| %>
+          <tr scope="row">
+            <%= render booking %>
+          </tr>
+          <% end %>
+        </tbody>
+      
+      </table>
+    </div>
+  </div>
+
+</div>

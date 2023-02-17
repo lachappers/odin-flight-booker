@@ -9,9 +9,58 @@
 
 <hr>
 <h3>Passenger Information:</h3>
-<% @booking.passengers.each do |passenger|%>
-  <% i = 1%>
-  <h4><%= "Passenger #{i}" %></h4>
-  <%= render 'layouts/passenger', passenger: passenger %>
-  <% i +=1 %>
-  <% end%>
+
+
+
+
+
+<div class="d-flex flex-column w100 align-items-center index-container">
+  <div class="title"><h1>Bookings</h1></div>
+
+  <div class="page-notices">
+    <p id='notice' style="color: green"><%= notice %></p>
+    <p id='alert' style="color: green"><%= alert %></p>
+  </div>
+  <hr>
+  <div class="index-container">
+    <div class="index-list">
+      <table class="table table-striped">
+        <h2>Booking</h2>
+        <thead>
+          <th scope="col">Booking Reference</th>
+          <th scope="col">Departure Date</th>
+          <th scope="col">Flight Number</th>
+          <th scope="col">Number of passengers</th>
+        </thead>
+        <tbody>
+          <tr scope="row">
+            <%= render booking %>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+    <div class="passenger-container">
+    <div class="index-list">
+      <table class="table table-striped">
+        <h2>Passengers</h2>
+        <thead>
+          <th scope="col">ID</th>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+        </thead>
+        <tbody>
+          <tr scope="row">
+            <% @booking.passengers.each do |passenger|%>
+              <% i = 1%>
+              <h4><%= "Passenger #{i}" %></h4>
+              <%= render 'layouts/passenger', passenger: passenger %>
+              <% i +=1 %>
+              <% end%>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>

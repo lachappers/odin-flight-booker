@@ -74,3 +74,6 @@ end
 group :development do
   gem 'annotate'
 end
+gem "cssbundling-rails", "~> 1.1"
+
+gem "jsbundling-rails", "~> 1.1"
