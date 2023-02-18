@@ -18,12 +18,9 @@
 #  booking_id  (booking_id => bookings.id)
 #
 class Passenger < ApplicationRecord
-  # has_many :bookings, :dependent => :delete_all
-  belongs_to :booking, :dependent => :destroy
-  has_many :flights, through: :booking,  :dependent => :destroy
+  belongs_to :booking, dependent: :destroy
+  has_many :flights, through: :booking, dependent: :destroy
 
-
-  # accepts_nested_attributes_for :bookings, allow_destroy: true
   
-  validates :email, uniqueness: {case_sensitive: false}
+  # validates :email, uniqueness: {case_sensitive: false}
 end

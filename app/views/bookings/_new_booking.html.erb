@@ -1,14 +1,18 @@
 <%# <%= p params %>
 
   <%= form_with url: 'bookings/new/', method: :get, local: true do |ff| %>
+    <%= ff.submit "Book", name: 'book', class: "btn btn-primary" %>
     <% ff.label :passenger_count %>
-    <%= ff.hidden_field :passenger_count, value: params[:flight][:passenger_count] %>
+    <%= ff.hidden_field :passenger_count, value: params[:passenger_count] %>
+      
+    <div class="form-check p-3">
       <% @flights.each do |flight|  %>
-        <tr>
-          <% ff.label :flight_id %>
-          <td><%= ff.radio_button :flight_id, flight.id %></td>
-          <%= render flight %>
+        
+        <tr scope = "row">
+            <% ff.label :flight_id, class: "form-check-label" %>
+            <td><%= ff.radio_button :flight_id, flight.id, {class: "form-check-input"} %></td>
+            <%= render flight %>
         </tr>
       <% end %>
-    <%= ff.submit "Book" %>
+    </div>
   <% end %>

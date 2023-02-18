@@ -4,11 +4,13 @@
 
 <%= p @booking %>
 
-<h2>Flight Information:</h2>
-  <%# <%= render 'flights/flight', flight: @booking.flight %> %>
-
-<hr>
-<h3>Passenger Information:</h3>
+<div class="table">
+  <h2>Flight Information:</h2>
+    <thead></thead>
+    <tbody>
+      <tr scope = "row" ><%= render 'flights/flight', flight: @booking.flight %></tr>
+    </tbody>
+</div>
 
 
 
@@ -34,7 +36,7 @@
         </thead>
         <tbody>
           <tr scope="row">
-            <%= render booking %>
+            <%= render @booking %>
           </tr>
         </tbody>
       </table>
@@ -45,22 +47,29 @@
       <table class="table table-striped">
         <h2>Passengers</h2>
         <thead>
+          <th scope="col"></th>
           <th scope="col">ID</th>
           <th scope="col">Name</th>
           <th scope="col">Email</th>
         </thead>
         <tbody>
-          <tr scope="row">
-            <% @booking.passengers.each do |passenger|%>
-              <% i = 1%>
-              <h4><%= "Passenger #{i}" %></h4>
+          <% i = 1%>
+          <% @booking.passengers.each do |passenger|%>
+            
+            <tr scope="row">
+              <td><%= "Passenger #{i}" %></td>
               <%= render 'layouts/passenger', passenger: passenger %>
-              <% i +=1 %>
-              <% end%>
-          </tr>
+            </tr>
+            <% i +=1 %>
+          <% end%>
         </tbody>
       </table>
     </div>
+  </div>
+
+  <div class="nav-buttons">
+    <%= link_to "Back to bookings", bookings_path %>
+    <%= link_to "Make a new booking", flights_path %>
   </div>
 
 </div>

@@ -1,4 +1,4 @@
-<td><%= booking.booking_ref %></td>
+<td><%= link_to booking.booking_ref, booking %></td>
 <td><%= Date.parse(booking.flight.start_time.to_s) %></td>
 <td><%= booking.flight_id %></td>
 <td><%= booking.passengers.count %></td>

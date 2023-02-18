@@ -8,10 +8,11 @@ class BookingsController < ApplicationController
   def create
 
     @booking = Booking.new(booking_params)
+    @booking.passenger_count = @booking.passengers.count
     if @booking.save
       # booking.passenger_count = 
       flash[:success] = "Booking Successfully Created"
-      redirect_to booking_path(@booking)
+      redirect_to @booking
       # , notice: 'Booking created!'
       # booking_url(@booking)
     else 
@@ -23,7 +24,7 @@ class BookingsController < ApplicationController
 
   def show
     @booking = Booking.find(params[:id])
-    @booking.flight = Flight.find(params[:flight_id])
+    @booking.flight = Flight.find(@booking[:flight_id])
   end
 
   def index
@@ -35,9 +36,9 @@ class BookingsController < ApplicationController
   private
   
   def booking_params
-    params.require(:booking).permit(:id, :flight_id, :passenger_count,  passengers_attributes: [:id, :name, :email])
+    params.require(:booking).permit(:id, :flight_id, :passenger_count, passengers_attributes: [:id, :name, :email, :_destroy])
   end
   def search_params
-    params.permit(:passenger_count, :flight_id, :commit)
+    params.permit(:passenger_count, :flight_id, :commit, :book)
   end
 end

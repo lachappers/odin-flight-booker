@@ -4,39 +4,32 @@ class FlightsController < ApplicationController
   end
 
   def index
-  # new flight object required to add params to a flight object
-  @flight = Flight.new
-  @flights = Flight.all.order(start_time: :asc)
-  # params[:flight].compact_blank!
-  if params[:flight]
-    params[:flight].compact_blank!
-    flight_search
-
-  # else
-
-  #   @flights = Flight.all.limit(20).order(start_time: :asc)
-  end 
+    # new flight object required to add params to a flight object
+    # @flight = Flight.new()
+    @flights = Flight.all.order(start_time: :asc)
+    if params[:flight]
+      params[:flight].compact_blank!
+      flight_search
+      
+    end
     @airport_options = Flight.airport_options
     get_flight_dates
+    render :index
   end
 
   def get_flight_dates
-    @flight_dates = @flights.map{|f|  Date.parse(f.start_time.to_s)}.uniq
+    @flight_dates = @flights.map { |f| Date.parse(f.start_time.to_s)}.uniq
   end
 
   def flight_search
-    
-    # @flight_params = flight_params
     if params[:flight].empty?
       flash.now[:alert] = "No search criteria set!"
       # flash.now[:notice] = params[:flight].errors.full_messages.to_sentence
       # render :index, status: :unprocessable_entity
-
     elsif params[:flight][:start_date]
       @search_params = search_params
       search_results
     else
-      # works
       @flights = @flights.where(flight_params).order(start_time: :asc)
     end
   end

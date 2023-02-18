@@ -1,64 +1,62 @@
+<p>Params <%= p params %></p>
 
-<%# <p>Search Params - no local variable or method</p> %>
-<%# <p>Booking params - no local variable or method</p> %>
-<%# <p>Flight params  - no local variable or method</p> %>
-<%# <p>@Search Params</p><%= p @search_params %>  %>
-<p>Params</p><%= p params %>
-<%# <p>@Booking params</p><%= p @booking_params %> %>
-<%# <p>@Flight params</p><%= p @flight_params %> %>
+<div class="page-container d-flex flex-column w100 align-items-center">
+  <div class="title"><h1>Flight Search</h1></div>
 
-<br>
+  <div class="container page-notices">
+    <p id='notice' style="color: green"><%= notice %></p>
+    <p id='alert' style="color: green"><%= alert %></p>
+  </div>
 
-<h1>Flight Search</h1>
+  <div class="container index-container">
 
+    <div class="search-form d-flex flex-column border w-100 p-3 rounded align-self-center">
+      <%= render 'search_form', flight: @flight %>
+    </div>
 
-  <p id='notice' style="color: green"><%= notice %></p>
-  <p id='alert' style="color: green"><%= alert %></p>
+    <div class="container index-list">
+      <div class="search-result-text">
 
-<div>
-  <%# <% @flight = Flight.new  %> %>
-  <%= render 'search_form', flight: @flight %>
-</div>
-<hr>
-  <h2>Available flights:</h2>
-
-  <table>
-    <thead>
-      <tr>
-        <th>Select Flight</th>
-        <th>Departure Date</th>
-        <th>Departure Time</th>
-        <th>Departure Airport</th>
-        <th>Arrival Airport</th>
-      </tr>
-    </thead>
-    <tbody>
-      <% if params[:flight] %>
-        <%= link_to root_path do %>
-          <h4>New Search</h4>
-        <% end %> 
-        <h4><%= pluralize(@flights.length, 'flight')%> matched your search</h4>
-      
-        <% if params[:flight][:passenger_count] %>
-          <%= render '/bookings/new_booking' %>
-        <% else %>
-          <div style="color: red">
-          <h4>Select number of passengers before you can book your flight </h4>
-          </div>
-          <% @flights.each do |flight|  %>
-              <tr>
-                <td><%= render flight %></td>
-              </tr>
-          <% end %>
-        <% end %>
-      
-      <% else %>
-            <% @flights.each do |flight|  %>
-              <tr>
-                <td><%= render flight %></td>
-              </tr>
+        <div class="container page-notices p-3">
+          <% if params[:flight] %>
+            <h4><%= pluralize(@flights.length, 'flight')%> matched your search</h4>
+            <% if !params[:passenger_count]%>
+              <div style="color: red"><h4>Select number of passengers before you can book your flight </h4></div>
             <% end %>
-      <% end %>
+            <div><%= link_to "New Search", root_path %></div>
+          <% end %>
+        </div>
+        <div class="title"><h2>Available flights:</h2></div>
+      </div>
+      
+      <div class="flight-container p-3">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+            <% if params[:passenger_count] %>
+              <th scope="col">Select Flight</th>
+            <% end%>
+              <th scope="col">Departure Date</th>
+              <th scope="col">Departure Time</th>
+              <th scope="col">Departure Airport</th>
+              <th scope="col">Arrival Airport</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if params[:passenger_count]  %>
+              <%= render '/bookings/new_booking' %>
+            
+            <% else %>
+              <% @flights.each do |flight|  %>
+                <tr scope = "row" ><%= render flight %></tr>
+                <% end %>
+            <% end %>
+              
+          </tbody>
+        </table>
+      </div>
 
-    </tbody>
-  </table>
+    </div>
+  </div>
+
+</div>

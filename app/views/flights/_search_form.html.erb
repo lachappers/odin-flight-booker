@@ -1,22 +1,35 @@
+<%# <%= form_with model: @flight, url: "flights#index", method: :get, local: true do |f| %> %>
+<%= form_with url: "flights#index", method: :get, local: true do |f| %>
 
-  <%= form_with model: @flight, url: "flights#index", method: :get, local: true do |f| %>
-
-    <%= f.label :departure_airport_id %>
-    <br>
-    <%= f.select :departure_airport_id, @airport_options, prompt: true %>
+  <div class="row border p-2">
+    <div class="departure-airport border col">
+      <%= f.label "flight[departure_airport_id]", class: "form-label" %>
+      <br>
+      <%= f.select "flight[departure_airport_id]", @airport_options, {prompt: true} ,{class: "form-select" }%>
+    </div>
     <br><br>
-    <%= f.label :arrival_airport_id %>
-    <br>
-    <%= f.select :arrival_airport_id, @airport_options, prompt: true %>
+    <div class="arrival-airport border col">
+      <%= f.label "flight[arrival_airport_id]", class: "form-label" %>
+      <br>
+      <%= f.select "flight[arrival_airport_id]", @airport_options, {prompt: true}, {class: "form-select" } %>
+    </div>
+  </div>
+  <br><br>
+  
+  <div class="row p-2">
+    <div class="passenger-count border col">
+      <%= f.label :passenger_count, "Number of Passengers", class: "form-label" %>
+      <br>
+      <%= f.select :passenger_count, (1..4), {prompt: true}, {class: "form-select" } %>
+    </div>
     <br><br>
-    <%= f.label :passenger_count, "Number of Passengers" %>
-    <br>
-    <%= f.select :passenger_count, (1..4), prompt: true %>
-    <br><br>
-    <%= f.label :start_date, "Departure Date" %>
-    <br>
-    <%= f.select :start_date, @flight_dates, prompt: true %>
-
-    <br><br>
-    <%= f.submit "Search"%>
-  <% end %>
+    <div class="departure-date border col">
+      <%= f.label :start_date, "Departure Date", class: "form-label" %>
+      <br>
+      <%= f.select :start_date, @flight_dates, {prompt: true}, {class: "form-select" }  %>
+    </div>
+  </div>
+  
+  <br><br>
+  <%= f.submit "Search", name: 'search', class: "btn btn-primary"%>
+<% end %>

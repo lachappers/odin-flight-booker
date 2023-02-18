@@ -19,19 +19,20 @@
 #  flight_id  (flight_id => flights.id)
 #
 class Booking < ApplicationRecord
-  # belongs_to : :passenger
-
   belongs_to :flight, inverse_of: :bookings
   has_many :passengers
-  # pax id is fk for above
 
   validates :flight_id, presence: true
+  validate :require_one_passenger
+  # validates :passengers_attributes, presence: true
 
-  accepts_nested_attributes_for :passengers, allow_destroy: true
 
-  # after_initialize :set_booking_ref
+  accepts_nested_attributes_for :passengers, allow_destroy: true, reject_if: proc { |attr| attr['name'].blank? || attr['email'].blank? }
+
   before_create :set_booking_ref
 
+  private
+  
   def set_booking_ref
     self.booking_ref = generate_booking_ref
   end
@@ -45,6 +46,8 @@ class Booking < ApplicationRecord
     end
   end
 
-
+  def require_one_passenger
+    errors.add(:base, "You must provide details for at least 1 passenger") if passengers.size < 1
+  end
 
 end
