@@ -12,6 +12,7 @@ class BookingsController < ApplicationController
     if @booking.save
       # booking.passenger_count = 
       flash[:success] = "Booking Successfully Created"
+      send_emails
       redirect_to @booking
       # , notice: 'Booking created!'
       # booking_url(@booking)
@@ -31,6 +32,11 @@ class BookingsController < ApplicationController
     @bookings = Booking.all
   end
 
+  def send_emails
+    @booking.passengers.each { |passenger|
+      PassengerMailer.with(passenger: passenger).booking_confirmation_email.deliver_now!
+    }
+  end
 
 
   private

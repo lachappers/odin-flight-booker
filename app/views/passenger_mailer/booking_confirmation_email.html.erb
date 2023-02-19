@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Welcome to example.com, <%= @passenger.name %></h1>
+    <p>
+      You have successfully booked a flight with example.com,
+      your booking reference is: <%= @passenger.booking.booking_ref %>.<br>
+    </p>
+    <p>
+      To login to the site, just follow this link: <%= @url %>.
+    </p>
+    <p>Thanks for booking and have a great day!</p>
+  </body>
+</html>
