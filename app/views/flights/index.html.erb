@@ -5,7 +5,8 @@
 
   <div class="container page-notices">
     <p id='notice' style="color: green"><%= notice %></p>
-    <p id='alert' style="color: green"><%= alert %></p>
+    <p id='alert' style="color: red"><%= alert %></p>
+
   </div>
 
   <div class="container index-container">
@@ -20,9 +21,6 @@
         <div class="container page-notices p-3">
           <% if params[:flight] %>
             <h4><%= pluralize(@flights.length, 'flight')%> matched your search</h4>
-            <% if !params[:passenger_count]%>
-              <div style="color: red"><h4>Select number of passengers before you can book your flight </h4></div>
-            <% end %>
             <div><%= link_to "New Search", root_path %></div>
           <% end %>
         </div>
@@ -33,7 +31,7 @@
         <table class="table table-striped">
           <thead>
             <tr>
-            <% if params[:passenger_count] %>
+            <% if params[:passenger_count] && !params[:passenger_count].empty?  %>
               <th scope="col">Select Flight</th>
             <% end%>
               <th scope="col">Departure Date</th>
@@ -43,9 +41,8 @@
             </tr>
           </thead>
           <tbody>
-            <% if params[:passenger_count]  %>
+            <% if params[:passenger_count] && !params[:passenger_count].empty?  %>
               <%= render '/bookings/new_booking' %>
-            
             <% else %>
               <% @flights.each do |flight|  %>
                 <tr scope = "row" ><%= render flight %></tr>

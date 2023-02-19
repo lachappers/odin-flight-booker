@@ -1,20 +1,18 @@
 class FlightsController < ApplicationController
-  def new
-    @flight = Flight.new
-  end
 
   def index
-    # new flight object required to add params to a flight object
-    # @flight = Flight.new()
     @flights = Flight.all.order(start_time: :asc)
     if params[:flight]
       params[:flight].compact_blank!
       flight_search
-      
+      if params[:passenger_count].empty?
+        flash.now[:alert] = 'Select number of passengers before you can book your flight'
+      end
     end
     @airport_options = Flight.airport_options
+    set_search_variables
     get_flight_dates
-    render :index
+    # render :index
   end
 
   def get_flight_dates
@@ -22,22 +20,24 @@ class FlightsController < ApplicationController
   end
 
   def flight_search
-    if params[:flight].empty?
-      flash.now[:alert] = "No search criteria set!"
-      # flash.now[:notice] = params[:flight].errors.full_messages.to_sentence
+    if !params[:start_date].empty?
+      # fliter by date
+      date_results
+    elsif params[:flight].empty?
+      # don't filter flights
+      flash.now[:alert] = "No airports selected!"
       # render :index, status: :unprocessable_entity
-    elsif params[:flight][:start_date]
-      @search_params = search_params
-      search_results
     else
+      # filter by flight params
       @flights = @flights.where(flight_params).order(start_time: :asc)
     end
   end
 
-  def search_results
-    @date_picked = Date.parse(@search_params[:start_date])
-    @flights = @flights.where(start_time: @date_picked.all_day).order(start_time: :asc)
-    if @search_params[:departure_airport_id] || @search_params[:arrival_airport_id]
+  def date_results
+    @date_picked = Date.parse(params[:start_date])
+    if params[:flight].empty?
+      @flights = @flights.where(start_time: @date_picked.all_day).order(start_time: :asc)
+    else
       @flights = @flights.where(flight_params, start_time: @date_picked.all_day).order(start_time: :asc)
     end
   end
@@ -52,7 +52,14 @@ class FlightsController < ApplicationController
     params.permit(:start_date, :passenger_count, :flight_id)
     # params.require(:flight).permit(:departure_airport_id, :arrival_airport_id, :start_date, :passenger_count, :flight_id, :commit)
   end
-
+  def set_search_variables
+    @passenger_count = params[:passenger_count]
+    @start_date = params[:start_date]
+    if params[:flight]
+      @departure_airport_id = params[:flight][:departure_airport_id]
+      @arrival_airport_id = params[:flight][:arrival_airport_id]
+    end
+  end
 
 end
 

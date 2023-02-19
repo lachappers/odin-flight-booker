@@ -1,17 +1,20 @@
-<%# <%= form_with model: @flight, url: "flights#index", method: :get, local: true do |f| %> %>
-<%= form_with url: "flights#index", method: :get, local: true do |f| %>
+<%# <%= form_with model: @flight, url: "flights#index", method: :get, local: true do |f| %> 
+<%# <%= form_with model: Flight.new, method: :get, local: true do |f| %>
+      <%# <%= f.select :departure_airport_id, @airport_options, {prompt: true, selected: @departure_airport_id}, {class: "form-select" }%>
+
+<%= form_with url: "flights#index", method: :get, local: true, data: { turbo: "false" } do |f| %>
 
   <div class="row border p-2">
     <div class="departure-airport border col">
-      <%= f.label "flight[departure_airport_id]", class: "form-label" %>
+      <%= f.label "flight[departure_airport_id]", "Departure Airport", class: "form-label" %>
       <br>
-      <%= f.select "flight[departure_airport_id]", @airport_options, {prompt: true} ,{class: "form-select" }%>
+      <%= f.select "flight[departure_airport_id]", @airport_options, {prompt: true, selected: @departure_airport_id} ,{class: "form-select" }%>
     </div>
     <br><br>
     <div class="arrival-airport border col">
-      <%= f.label "flight[arrival_airport_id]", class: "form-label" %>
+      <%= f.label "flight[arrival_airport_id]", "Arrival Airport", class: "form-label" %>
       <br>
-      <%= f.select "flight[arrival_airport_id]", @airport_options, {prompt: true}, {class: "form-select" } %>
+      <%= f.select "flight[arrival_airport_id]", @airport_options, {prompt: true, selected: @arrival_airport_id}, {class: "form-select" } %>
     </div>
   </div>
   <br><br>
@@ -20,13 +23,13 @@
     <div class="passenger-count border col">
       <%= f.label :passenger_count, "Number of Passengers", class: "form-label" %>
       <br>
-      <%= f.select :passenger_count, (1..4), {prompt: true}, {class: "form-select" } %>
+      <%= f.select :passenger_count, (1..4), {prompt: true, selected: @passenger_count}, {class: "form-select" } %>
     </div>
     <br><br>
     <div class="departure-date border col">
       <%= f.label :start_date, "Departure Date", class: "form-label" %>
       <br>
-      <%= f.select :start_date, @flight_dates, {prompt: true}, {class: "form-select" }  %>
+      <%= f.select :start_date, @flight_dates, {prompt: true, selected: @start_date}, {class: "form-select" }  %>
     </div>
   </div>
   
