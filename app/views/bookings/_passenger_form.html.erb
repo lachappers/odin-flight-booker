@@ -1,9 +1,4 @@
-<div class="passenger-entry border w-100 p-3 rounded align-self-center nested-fields" data-new-record="<%= ff.object.new_record? %>">
-
-  <div class="mb-3">
-    <h4>Passenger (insert number)</h4>
-    <%# <h4>Passenger (<%="#{i}")</h4> %>
-  </div>
+<div class=" ">
 
   <div class="passenger mb-3">
       <%= ff.label :name , class: "form-label"%>
@@ -15,9 +10,10 @@
       <%= ff.text_field :email, class: "form-control" %>
   </div>
 
-  <div class="passenger-remove-button">
-    <button type="button" data-action="nested-form#remove" class="btn btn-outline-primary">Remove this Passenger</button>
+  <div data-nested-form-target = "hideable"> 
+    <button type="button" data-action="nested-form#remove_association" class="btn btn-outline-primary">Remove this Passenger</button>
   </div>
 
   <%= ff.hidden_field :_destroy %>
+
 </div>

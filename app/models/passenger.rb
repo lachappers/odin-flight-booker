@@ -21,6 +21,6 @@ class Passenger < ApplicationRecord
   belongs_to :booking, dependent: :destroy
   has_many :flights, through: :booking, dependent: :destroy
 
-  
+  validates :email, :name, presence: true
   # validates :email, uniqueness: {case_sensitive: false}
 end

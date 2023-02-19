@@ -5,20 +5,39 @@
       <%= f.hidden_field :flight_id, value: params[:flight_id] %>
     </div>
 
-    <div data-controller="nested-form">
 
-      <template data-nested-form-target="template", data-nested-field-selector-value='.nested-fields'>
+    <div data-controller="nested-form" data-nested-form-pax-value="<%= params[:passenger_count]%>">
+
+      <div data-nested-form-target = "pax"></div>
+      <template data-nested-form-target="template">
         <%= f.fields_for :passengers, Passenger.new, child_index: 'NEW_RECORD' do |ff| %>
-          <%= render "passenger_form", ff: ff %>
+        <div class="border w-100 p-3 rounded align-self-center nested-fields">
+          <div class="title-3 mb-3">
+          <%# issue as it won't change the number if record deleted %>
+            <%# <% @passenger_count +=1 %> 
+            <h5>New Passenger</h5>
+          </div>
+            <%= render "passenger_form", ff: ff %>
+        </div>
         <% end %>
       </template>
 
-      <%= f.fields_for :passengers do |ff| %>
-        <%= render "passenger_form", ff: ff %>
-      <% end %>
+      <div>
+
+        <%= f.fields_for :passengers do |ff| %>
+          <div class="border w-100 p-3 rounded align-self-center nested-fields">
+            <div class="title-3 mb-3">
+              <h5>New Passenger</h5>
+            </div>
+            <%= render "passenger_form", ff: ff %>
+          </div>
+        <% end %>
+      </div>
+
+
 
       <div class= "p-3" data-nested-form-target="target">
-        <button class = "btn btn-outline-primary " type="button" data-action="nested-form#add">Add Another Passenger</button>
+        <button class = "btn btn-outline-primary " type="button" data-action="nested-form#add_association">Add Another Passenger</button>
       </div>
 
     </div>
