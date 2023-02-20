@@ -23,4 +23,13 @@ class Passenger < ApplicationRecord
 
   validates :email, :name, presence: true
   # validates :email, uniqueness: {case_sensitive: false}
+
+  after_create :set_booking_pax
+
+  private
+
+  def set_booking_pax
+    booking = self.booking
+    booking.passenger_count = booking.passengers.count
+  end
 end

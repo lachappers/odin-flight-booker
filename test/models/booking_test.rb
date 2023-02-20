@@ -2,12 +2,11 @@
 #
 # Table name: bookings
 #
-#  id              :integer          not null, primary key
-#  booking_ref     :string
-#  passenger_count :integer
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  flight_id       :integer
+#  id          :integer          not null, primary key
+#  booking_ref :string
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  flight_id   :integer
 #
 # Indexes
 #

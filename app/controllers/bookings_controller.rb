@@ -1,4 +1,6 @@
 class BookingsController < ApplicationController
+
+
   def new
     @booking = Booking.new
     @booking.flight = Flight.find(params[:flight_id])
@@ -8,7 +10,7 @@ class BookingsController < ApplicationController
   def create
 
     @booking = Booking.new(booking_params)
-    @booking.passenger_count = @booking.passengers.count
+
     if @booking.save
       # booking.passenger_count = 
       flash[:success] = "Booking Successfully Created"
@@ -47,4 +49,5 @@ class BookingsController < ApplicationController
   def search_params
     params.permit(:passenger_count, :flight_id, :commit, :book)
   end
+
 end

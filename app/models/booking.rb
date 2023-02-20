@@ -2,12 +2,11 @@
 #
 # Table name: bookings
 #
-#  id              :integer          not null, primary key
-#  booking_ref     :string
-#  passenger_count :integer
-#  created_at      :datetime         not null
-#  updated_at      :datetime         not null
-#  flight_id       :integer
+#  id          :integer          not null, primary key
+#  booking_ref :string
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#  flight_id   :integer
 #
 # Indexes
 #
@@ -30,6 +29,7 @@ class Booking < ApplicationRecord
   accepts_nested_attributes_for :passengers, allow_destroy: true, reject_if: proc { |attr| attr['name'].blank? || attr['email'].blank? }
 
   before_create :set_booking_ref
+  # after_create :update_pax
 
   private
   
@@ -49,5 +49,9 @@ class Booking < ApplicationRecord
   def require_one_passenger
     errors.add(:base, "You must provide details for at least 1 passenger") if passengers.size < 1
   end
+
+  # def  update_pax
+  #   @booking.passenger_count = @booking.passengers.count
+  # end
 
 end
